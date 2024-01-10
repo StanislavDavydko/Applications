@@ -3,16 +3,16 @@ using System;
 
 namespace B_Application.Web.Models
 {
-    public class ApplicationModel
+    public class PriceModel
     {
         public int Id { get; set; }
         public string CurrencyPair { get; set; }
         public double Price { get; set; }
         public DateTime Timestamp { get; set; }
 
-        public ApplicationModel() { }
+        public PriceModel() { }
 
-        public ApplicationModel(PriceData price)
+        public PriceModel(PriceInformation price)
         {
             if (price != null)
             {

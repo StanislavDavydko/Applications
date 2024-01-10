@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -11,6 +11,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Application.DataAccess\Application.DataAccess.csproj" />
     <ProjectReference Include="..\Application.DomainModel\Application.DomainModel.csproj" />
+    <ProjectReference Include="..\Application.Web.DTO\Application.Web.DTO.csproj" />
   </ItemGroup>
 
 </Project>

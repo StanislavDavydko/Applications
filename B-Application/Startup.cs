@@ -20,7 +20,7 @@ namespace B_Application.Web
             services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddSignalR();  // підключені сервіси SignalR
+            services.AddSignalR();
         }
 
         public void Configure(IApplicationBuilder app)

@@ -2,7 +2,7 @@
 
 namespace Application.DomainModel
 {
-    public class PriceData
+    public class PriceInformation
     {
         public int Id { get; set; }
         public string CurrencyPair { get; set; }

@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Application.DomainServices
 {
-    public class ApplicationService : IApplicationService
+    public class PriceService : IPriceService
     {
-        private readonly IApplicationRepository _repository;
+        private readonly IPriceRepository _repository;
 
-        public ApplicationService(IApplicationRepository repository)
+        public PriceService(IPriceRepository repository)
         {
             _repository = repository;
         }
@@ -21,7 +21,7 @@ namespace Application.DomainServices
             double price,
             DateTime timestamp)
         {
-            var priceData = new PriceData
+            var priceData = new PriceInformation
             {
                 CurrencyPair = currencyPair,
                 Price = price,
@@ -32,6 +32,13 @@ namespace Application.DomainServices
             await _repository.SaveChangesAsync();
 
            return HttpStatusCode.OK;
+        }
+
+        public async Task<PriceInformation> Get(int id)
+        {
+            var price = await _repository.GetPrice(id);
+
+            return price;
         }
     }
 }
