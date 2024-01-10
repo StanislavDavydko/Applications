@@ -1,34 +1,25 @@
 ﻿using Application.DomainModel.Services;
-using B_Application.Web.Models;
 using Microsoft.AspNetCore.Mvc;
-using System.Net;
-using System.Threading.Tasks;
+using System.Text.Json;
 
 namespace B_Application.Web.Controllers
 {
     [ApiController]
     public class HomeController
     {
-        private readonly IApplicationService _applicationService;
+        private readonly IPriceService _priceService;
 
-        public HomeController(IApplicationService applicationService)
+        public HomeController(IPriceService priceService)
         {
-            _applicationService = applicationService;
+            _priceService = priceService;
         }
 
-        [HttpGet]
-        public HttpStatusCode Get(ApplicationModel model)
+        [HttpGet("action/{id}")]
+        public string Get(int id)
         {
-            var app = _applicationService.Add(model.CurrencyPair, model.Price, model.Timestamp);
+            var price = _priceService.Get(id);
 
-            if(app.Status == TaskStatus.RanToCompletion)
-            {
-                return HttpStatusCode.OK;
-            }
-            else
-            {
-                return HttpStatusCode.BadRequest;
-            }
+            return JsonSerializer.Serialize(price);
         }
     }
 }

@@ -2,10 +2,12 @@
 
 namespace Application.DomainModel.Services.DataAccess
 {
-    public interface IApplicationRepository
+    public interface IPriceRepository
     {
         Task SaveChangesAsync();
 
-        void Add(PriceData price);
+        void Add(PriceInformation price);
+
+        Task<PriceInformation> GetPrice(int id);
     }
 }

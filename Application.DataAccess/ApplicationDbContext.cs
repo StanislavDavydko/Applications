@@ -9,11 +9,11 @@ namespace Application.DataAccess
             : base(options)
         {
         }
-        public DbSet<PriceData> Prices { get; set; }
+        public DbSet<PriceInformation> Prices { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder builder)
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            base.OnModelCreating(builder);
+            optionsBuilder.UseNpgsql("your_connection_string_here");
         }
     }
 }

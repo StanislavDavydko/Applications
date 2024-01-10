@@ -4,7 +4,7 @@
     {
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSignalR();  // підключені сервіси SignalR
+            services.AddSignalR();
         }
 
         public void Configure(IApplicationBuilder app)
@@ -18,7 +18,7 @@
 
             app.UseEndpoints(e =>
             {
-                e.MapHub<PriceHub>("/priceHub");  //PriceHub буде обробляти запроси по путі до /chat
+                e.MapHub<PriceHub>("/priceHub");
             });
         }
     }
