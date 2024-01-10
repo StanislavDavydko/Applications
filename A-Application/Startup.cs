@@ -18,7 +18,7 @@
 
             app.UseEndpoints(e =>
             {
-                e.MapHub<ChatHub>("/chat");     //ChatHub буде обробляти запроси по путі до /chat
+                e.MapHub<PriceHub>("/priceHub");  //PriceHub буде обробляти запроси по путі до /chat
             });
         }
     }

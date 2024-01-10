@@ -6,9 +6,13 @@
 </head>
 <body>
     <div>
-        Введите логин:<br />
-        <input id="userName" type="text" /><br /><br />
-        Введите сообщение:<br />
+        Enter Currency Pair:<br />
+        <input id="currencyPair" type="text" />
+        <select asp-for="CurrencyPair" class="form-control" required>
+            <option value="1">USD</option>
+            <option value="2">EUR</option>
+        </select>
+        Enter your price:<br />
         <input type="text" id="message" /><br /><br />
         <input type="button" id="sendBtn" value="Отправить" disabled="disabled" />
     </div>
@@ -20,24 +24,24 @@
             .build();
 
         document.getElementById("sendBtn").addEventListener("click", function () {
-            const userName = document.getElementById("userName").value;   // получаем введенное имя
+			const currencyPair = document.getElementById("currencyPair").value;   // получаем введенное имя
             const message = document.getElementById("message").value;
 
-            hubConnection.invoke("Send", message, userName) // отправка данных серверу
+			hubConnection.invoke("Send", message, currencyPair) // отправка данных серверу
                 .catch(function (err) {
                     return console.error(err.toString());
                 });
         });
         // получение данных с сервера
-        hubConnection.on("Receive", function (message, userName) {
+		hubConnection.on("Receive", function (message, currencyPair) {
 
             // создаем элемент <b> для имени пользователя
-            const userNameElem = document.createElement("b");
-            userNameElem.textContent = `${userName}: `;
+			const currencyPairElem = document.createElement("b");
+			currencyPairElem.textContent = `${currencyPair}: `;
 
             // создает элемент <p> для сообщения пользователя
             const elem = document.createElement("p");
-            elem.appendChild(userNameElem);
+			elem.appendChild(currencyPairElem);
             elem.appendChild(document.createTextNode(message));
 
             // добавляем новый элемент в самое начало

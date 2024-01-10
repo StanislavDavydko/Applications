@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <AssemblyName>Application.DomainServices</AssemblyName>
+    <RootNamespace>Application.DomainServices</RootNamespace>
+    <Authors>Application</Authors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Application.DataAccess\Application.DataAccess.csproj" />
+    <ProjectReference Include="..\Application.DomainModel\Application.DomainModel.csproj" />
+  </ItemGroup>
+
+</Project>
