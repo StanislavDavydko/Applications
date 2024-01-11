@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using Bogus;
 using Application.DomainModel;
+using System.Threading.Tasks;
+using System;
 
 namespace A_Application.Web
 {
@@ -19,6 +21,7 @@ namespace A_Application.Web
         {
             while (true)
             {
+                await Task.Delay(200);
                 var priceData = new PriceInformation
                 {
                     CurrencyPair = "EUR/USD",
@@ -27,9 +30,6 @@ namespace A_Application.Web
                 };
 
                 await _hubContext.Clients.All.SendAsync("Prices", priceData);
-
-                // Wait for 200 milliseconds before sending the next data
-                await Task.Delay(200);
             }
         }
     }

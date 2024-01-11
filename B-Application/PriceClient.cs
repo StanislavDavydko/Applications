@@ -1,7 +1,6 @@
-﻿using Application.DomainModel;
-using Application.DomainModel.Services;
+﻿using Application.DomainModel.Services;
+using Application.Web.DTO;
 using Microsoft.AspNetCore.SignalR.Client;
-using System;
 using System.Threading.Tasks;
 
 namespace B_Application.Web
@@ -17,13 +16,11 @@ namespace B_Application.Web
                 .WithUrl(hubUrl)
                 .Build();
 
-            _priceService = priceService;
+            hubConnection.StartAsync();
 
-            hubConnection.Closed += async (error) =>
-            {
-                await Task.Delay(new Random().Next(0, 5) * 1000);
-                await hubConnection.StartAsync();
-            };
+            SubscribeToPriceData();
+
+            _priceService = priceService;
         }
 
         public async Task ConnectAsync()
@@ -33,15 +30,13 @@ namespace B_Application.Web
 
         public async Task SubscribeToPriceData()
         {
-            hubConnection.On<PriceInformation>("ReceivePriceData", (priceInformation) =>
+            hubConnection.On<PriceInformationDTO>("Pricest", (priceInformationDto) =>
             {
                 _priceService.Add(
-                    priceInformation.CurrencyPair, 
-                    priceInformation.Price, 
-                    priceInformation.Timestamp);
+                    priceInformationDto.CurrencyPair,
+                    priceInformationDto.Price,
+                    priceInformationDto.Timestamp);                
             });
-
-            await hubConnection.SendAsync("SubscribeToPriceData");
         }
 
         public async Task DisconnectAsync()
