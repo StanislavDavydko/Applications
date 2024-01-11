@@ -30,12 +30,7 @@ namespace B_Application.Web
             app.UseDefaultFiles();
             app.UseStaticFiles();
 
-            app.UseRouting();
-
-            app.UseEndpoints(e =>
-            {
-                e.MapControllerRoute(name: "default", pattern: "{controller=Home}/{action=Index}/{id?}");
-            });
+            app.UseRouting();   
         }
     }
 }

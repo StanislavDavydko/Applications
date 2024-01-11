@@ -4,12 +4,13 @@ using System.Text.Json;
 
 namespace B_Application.Web.Controllers
 {
+    [Route("api/[controller]")]
     [ApiController]
-    public class HomeController
+    public class PriceController : ControllerBase
     {
         private readonly IPriceService _priceService;
 
-        public HomeController(IPriceService priceService)
+        public PriceController(IPriceService priceService)
         {
             _priceService = priceService;
         }

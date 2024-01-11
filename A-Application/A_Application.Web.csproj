@@ -15,10 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Application.DomainModel\Application.DomainModel.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="wwwroot\" />
+    <ProjectReference Include="..\B-Application\B_Application.Web.csproj" />
   </ItemGroup>
 
 </Project>

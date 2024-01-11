@@ -27,6 +27,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Application.DataAccess\Application.DataAccess.csproj" />
+    <ProjectReference Include="..\Application.Web.DTO\Application.Web.DTO.csproj" />
   </ItemGroup>
 
 </Project>

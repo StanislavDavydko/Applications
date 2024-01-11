@@ -11,9 +11,14 @@ namespace Application.DataAccess
         }
         public DbSet<PriceInformation> Prices { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        protected override void OnModelCreating(ModelBuilder builder)
         {
-            optionsBuilder.UseNpgsql("your_connection_string_here");
+            base.OnModelCreating(builder);
+
+            builder.Entity<PriceInformation>(b =>
+            {
+                b.ToTable("PriceInformation");
+            });
         }
     }
 }
