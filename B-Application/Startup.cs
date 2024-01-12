@@ -30,7 +30,7 @@ namespace B_Application.Web
             app.UseDefaultFiles();
             app.UseStaticFiles();
 
-            app.UseRouting();   
+            app.UseRouting();
         }
     }
 }

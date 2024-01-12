@@ -1,7 +1,7 @@
 ﻿using Application.DomainModel.Services;
 using Application.Web.DTO;
 using Microsoft.AspNetCore.SignalR.Client;
-using System.Threading.Tasks;
+using System;
 
 namespace B_Application.Web
 {
@@ -12,36 +12,44 @@ namespace B_Application.Web
 
         public PriceClient(string hubUrl, IPriceService priceService)
         {
+            _priceService = priceService;
+
             hubConnection = new HubConnectionBuilder()
                 .WithUrl(hubUrl)
                 .Build();
 
-            hubConnection.StartAsync();
+            ConnectAsync();
 
             SubscribeToPriceData();
 
-            _priceService = priceService;
+            DisconnectAsync();
         }
 
-        public async Task ConnectAsync()
+        public void ConnectAsync()
         {
-            await hubConnection.StartAsync();
+            hubConnection.StartAsync();
+
+            Console.WriteLine("Connection is done");
         }
 
-        public async Task SubscribeToPriceData()
+        public void SubscribeToPriceData()
         {
-            hubConnection.On<PriceInformationDTO>("Pricest", (priceInformationDto) =>
+            hubConnection.On<PriceInformationDTO>("priceInformationDTO", (priceInformationDto) =>
             {
                 _priceService.Add(
                     priceInformationDto.CurrencyPair,
                     priceInformationDto.Price,
-                    priceInformationDto.Timestamp);                
+                    priceInformationDto.Timestamp);
+
+                Console.WriteLine("Data is saved");
             });
         }
 
-        public async Task DisconnectAsync()
+        public void DisconnectAsync()
         {
-            await hubConnection.StopAsync();
+            hubConnection.StopAsync();
+
+            Console.WriteLine("Disconnection is done");
         }
     }
 }

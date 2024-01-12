@@ -1,5 +1,6 @@
 ﻿using Application.DomainModel.Services;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Text.Json;
 
 namespace B_Application.Web.Controllers
@@ -19,6 +20,8 @@ namespace B_Application.Web.Controllers
         public string Get(int id)
         {
             var price = _priceService.Get(id);
+
+            Console.WriteLine("The data is given");
 
             return JsonSerializer.Serialize(price);
         }
