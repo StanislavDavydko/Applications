@@ -14,6 +14,9 @@ namespace A_Application.Web
             {
                 hubOptions.EnableDetailedErrors = true;
             });
+
+            services.AddHostedService<SignalRTimedHostedService>();
+            services.AddHttpContextAccessor();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

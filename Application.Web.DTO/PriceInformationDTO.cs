@@ -9,6 +9,8 @@ namespace Application.Web.DTO
         public double Price { get; set; }
         public DateTime Timestamp { get; set; }
 
+        public PriceInformationDTO() { }
+
         public PriceInformationDTO(DomainModel.PriceInformation priceInformation) 
         {
             Id = priceInformation.Id;

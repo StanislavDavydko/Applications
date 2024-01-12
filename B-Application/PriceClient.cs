@@ -10,12 +10,12 @@ namespace B_Application.Web
         private readonly HubConnection hubConnection;
         private readonly IPriceService _priceService;
 
-        public PriceClient(string hubUrl, IPriceService priceService)
+        public PriceClient(IPriceService priceService)
         {
             _priceService = priceService;
 
             hubConnection = new HubConnectionBuilder()
-                .WithUrl(hubUrl)
+                .WithUrl("http://localhost:5170")
                 .Build();
 
             ConnectAsync();
@@ -34,7 +34,7 @@ namespace B_Application.Web
 
         public void SubscribeToPriceData()
         {
-            hubConnection.On<PriceInformationDTO>("priceInformationDTO", (priceInformationDto) =>
+            hubConnection.On<PriceInformationDTO>("Price", (priceInformationDto) =>
             {
                 _priceService.Add(
                     priceInformationDto.CurrencyPair,
