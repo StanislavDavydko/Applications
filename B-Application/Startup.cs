@@ -3,6 +3,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Application.DataAccess;
+using Application.DomainModel.Services;
+using Application.DomainServices;
+using Application.DomainModel.Services.DataAccess;
+using Application.DataAccess.Repository;
+using Microsoft.Extensions.Hosting;
 
 namespace B_Application.Web
 {
@@ -21,6 +26,11 @@ namespace B_Application.Web
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddSignalR();
+
+            services.AddHostedService<SignalRTimedHostedServiceClient>();
+
+            services.AddSingleton<IPriceService, PriceService>();
+            services.AddSingleton<IPriceRepository, PriceRepository>();
         }
 
         public void Configure(IApplicationBuilder app)

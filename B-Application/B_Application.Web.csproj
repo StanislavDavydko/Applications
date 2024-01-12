@@ -6,12 +6,9 @@
     <AssemblyName>B_Application.Web</AssemblyName>
     <RootNamespace>B_Application.Web</RootNamespace>
     <Authors>Application</Authors>
-    <UserSecretsId>6fa76cd4-032f-4b49-91c8-747f8dfd3452</UserSecretsId>
-    <DockerDefaultTargetOS>Windows</DockerDefaultTargetOS>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Bogus" Version="35.3.0" />
     <PackageReference Include="Microsoft.AspNet.SignalR.Client" Version="2.4.3" />
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.0" />
@@ -30,7 +27,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Application.DataAccess\Application.DataAccess.csproj" />
+    <ProjectReference Include="..\Application.DomainServices\Application.DomainServices.csproj" />
     <ProjectReference Include="..\Application.Web.DTO\Application.Web.DTO.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
   </ItemGroup>
 
 </Project>

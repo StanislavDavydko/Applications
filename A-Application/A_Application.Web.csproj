@@ -6,8 +6,6 @@
     <AssemblyName>A_Application.Web</AssemblyName>
     <RootNamespace>A_Application.Web</RootNamespace>
     <Authors>Application</Authors>
-    <UserSecretsId>be1fcd4c-08ff-43c3-b39d-a298b83b9b16</UserSecretsId>
-    <DockerDefaultTargetOS>Windows</DockerDefaultTargetOS>
   </PropertyGroup>
 
   <ItemGroup>
