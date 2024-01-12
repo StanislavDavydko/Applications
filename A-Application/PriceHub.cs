@@ -3,6 +3,7 @@ using Bogus;
 using Application.DomainModel;
 using System.Threading.Tasks;
 using System;
+using Application.Web.DTO;
 
 namespace A_Application.Web
 {
@@ -22,14 +23,17 @@ namespace A_Application.Web
             while (true)
             {
                 await Task.Delay(200);
-                var priceData = new PriceInformation
+                var priceData = new PriceInformationDTO(new PriceInformation
                 {
                     CurrencyPair = "EUR/USD",
                     Price = _faker.Random.Double(1.0, 100.0),
                     Timestamp = DateTime.UtcNow
-                };
 
-                await _hubContext.Clients.All.SendAsync("Prices", priceData);
+                });
+
+                Console.WriteLine("A_Application started");
+
+                await _hubContext.Clients.All.SendAsync("priceInformationDTO", priceData);
             }
         }
     }
