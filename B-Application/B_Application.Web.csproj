@@ -31,8 +31,4 @@
     <ProjectReference Include="..\Application.Web.DTO\Application.Web.DTO.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="wwwroot\" />
-  </ItemGroup>
-
 </Project>

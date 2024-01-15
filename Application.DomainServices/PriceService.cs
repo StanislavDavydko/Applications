@@ -2,7 +2,6 @@
 using Application.DomainModel.Services;
 using Application.DomainModel.Services.DataAccess;
 using System;
-using System.Net;
 using System.Threading.Tasks;
 
 namespace Application.DomainServices
@@ -16,7 +15,7 @@ namespace Application.DomainServices
             _repository = repository;
         }
 
-        public async Task<HttpStatusCode> Add(
+        public async Task Add(
             string currencyPair,
             double price,
             DateTime timestamp)
@@ -30,8 +29,6 @@ namespace Application.DomainServices
 
             _repository.Add(priceData);
             await _repository.SaveChangesAsync();
-
-           return HttpStatusCode.OK;
         }
 
         public async Task<PriceInformation> Get(int id)
