@@ -6,63 +6,64 @@ using System;
 using Microsoft.AspNetCore.SignalR.Client;
 using Application.DomainModel.Services;
 using Application.Web.DTO;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace B_Application.Web
 {
     internal class SignalRTimedHostedServiceClient : IHostedService, IDisposable
     {
         private readonly HubConnection hubConnection;
-        private readonly IPriceService _priceService;
+        private readonly IServiceProvider _serviceProvider;
         private readonly ILogger _logger;
-        private Timer _timer;
 
-        public SignalRTimedHostedServiceClient(IPriceService priceService, ILogger<SignalRTimedHostedServiceClient> logger)
+        public SignalRTimedHostedServiceClient(
+            IServiceProvider serviceProvider,
+            ILogger<SignalRTimedHostedServiceClient> logger)
         {
             _logger = logger;
-            _priceService = priceService;
+            _serviceProvider = serviceProvider;
 
             hubConnection = new HubConnectionBuilder()
-                .WithUrl("http://localhost:5170")
+                .WithUrl("http://localhost:8080/priceHub")
+                .WithAutomaticReconnect()
                 .Build();
         }
 
-        public Task StartAsync(CancellationToken cancellationToken)
+        public async Task StartAsync(CancellationToken cancellationToken)
         {
             _logger.LogInformation("Timed Background Service is starting.");
 
-            _timer = new Timer(DoWork, null, TimeSpan.Zero,
-                TimeSpan.FromSeconds(1));
-
-            return Task.CompletedTask;
+            await DoWork();
         }
 
-        private void DoWork(object state)
+        private async Task DoWork()
         {
             _logger.LogInformation("Timed Background Service is working.");
 
-            hubConnection.On<PriceInformationDTO>("Price", (priceInformationDto) =>
+            hubConnection.On<PriceInformationDTO>("Prices", async (priceInformationDto) =>
             {
-                _priceService.Add(
+                var priceService = _serviceProvider.GetRequiredService<IPriceService>();
+                await priceService.Add(
                     priceInformationDto.CurrencyPair,
                     priceInformationDto.Price,
                     priceInformationDto.Timestamp);
 
-                Console.WriteLine("Data is saved");
+                Console.WriteLine(priceInformationDto.Timestamp.ToString());
             });
+
+            
+            await hubConnection.StartAsync();
         }
 
         public Task StopAsync(CancellationToken cancellationToken)
         {
             _logger.LogInformation("Timed Background Service is stopping.");
 
-            _timer?.Change(Timeout.Infinite, 0);
-
             return Task.CompletedTask;
         }
 
         public void Dispose()
         {
-            _timer?.Dispose();
         }
     }
 }

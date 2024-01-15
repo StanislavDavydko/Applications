@@ -7,7 +7,6 @@ using Application.DomainModel.Services;
 using Application.DomainServices;
 using Application.DomainModel.Services.DataAccess;
 using Application.DataAccess.Repository;
-using Microsoft.Extensions.Hosting;
 
 namespace B_Application.Web
 {
@@ -25,22 +24,24 @@ namespace B_Application.Web
             services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
+            services.AddControllers();
+
             services.AddSignalR();
 
             services.AddHostedService<SignalRTimedHostedServiceClient>();
 
-            services.AddSingleton<IPriceService, PriceService>();
-            services.AddSingleton<IPriceRepository, PriceRepository>();
+            services.AddScoped<IPriceService, PriceService>();
+            services.AddScoped<IPriceRepository, PriceRepository>();
         }
 
         public void Configure(IApplicationBuilder app)
         {
-            app.UseDeveloperExceptionPage();
-
-            app.UseDefaultFiles();
-            app.UseStaticFiles();
-
             app.UseRouting();
+
+            app.UseEndpoints(e =>
+            {
+                e.MapControllers();
+            });
         }
     }
 }

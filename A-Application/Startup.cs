@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 
 namespace A_Application.Web
 {
@@ -9,36 +8,22 @@ namespace A_Application.Web
     {
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            services.AddControllers();
             services.AddSignalR(hubOptions =>
             {
                 hubOptions.EnableDetailedErrors = true;
             });
 
             services.AddHostedService<SignalRTimedHostedService>();
-            services.AddHttpContextAccessor();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Error");
-                app.UseHsts();
-            }
-
-            app.UseDefaultFiles();
-            app.UseStaticFiles();
-
             app.UseRouting();
 
             app.UseEndpoints(e =>
             {
-                e.MapRazorPages();
+                e.MapControllers();
                 e.MapHub<PriceHub>("/priceHub");
             });
         }
